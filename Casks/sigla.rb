@@ -1,6 +1,6 @@
 cask "sigla" do
   version "0.5.0"
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "41ae78ad120855cedae0e31192c81ecfd4722624d108fc05fcd60f05f2ef679a"
 
   url "https://github.com/slantedt/sigla/releases/download/v#{version}/Sigla.zip"
   name "Sigla"
