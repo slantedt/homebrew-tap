@@ -1,8 +1,9 @@
 cask "mddeck" do
-  # `just release <v>` (run from the slantedt/markdowndeck repo) populates the
-  # real values: it seds the `version "…"` line and the `sha256 "…"` line, then
-  # uploads MarkdownDeck.zip as an asset of the matching `v<version>` GitHub
-  # release. No release exists yet, so these are placeholders — `:no_check`
+  # `just release <v>` (run from the markdowndeck source repo; releases publish
+  # to the public dist repo slantedt/markdowndeck-dist) populates the real
+  # values: it seds the `version "…"` line and the `sha256 "…"` line, then
+  # uploads MarkdownDeck.zip as an asset of the matching `v<version>` release.
+  # No release exists yet, so these are placeholders — `:no_check`
   # keeps this valid Ruby and obviously-not-real until the first release ships.
   #
   # NOTE: `just release` rewrites `sha256 "…"` via `sed`. When the first real
@@ -11,10 +12,10 @@ cask "mddeck" do
   version "0.0.0"
   sha256 :no_check
 
-  url "https://github.com/slantedt/markdowndeck/releases/download/v#{version}/MarkdownDeck.zip"
+  url "https://github.com/slantedt/markdowndeck-dist/releases/download/v#{version}/MarkdownDeck.zip"
   name "MarkdownDeck"
   desc "Markdown-to-presentation viewer with PDF export"
-  homepage "https://github.com/slantedt/markdowndeck"
+  homepage "https://github.com/slantedt/markdowndeck-dist"
 
   depends_on macos: :sonoma
 
