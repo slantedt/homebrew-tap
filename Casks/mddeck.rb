@@ -7,7 +7,7 @@ cask "mddeck" do
   # substitutions match. (No literal version/sha example in this comment — an
   # unanchored sed would otherwise rewrite it.)
   version "0.1.0"
-  sha256 "477da81bd10b103e966447ea13a3b32cdc8ef8cb2847dd47711a8d93a4569bc4"
+  sha256 "0cf5f4874a7dbc2e58c6401d17c2db50f2f4bd1b9431a0ec90ad6a5caf15bd2e"
 
   url "https://github.com/slantedt/markdowndeck-dist/releases/download/v#{version}/MarkdownDeck.zip"
   name "MarkdownDeck"
