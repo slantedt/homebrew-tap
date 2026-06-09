@@ -6,8 +6,8 @@ cask "mddeck" do
   # then), and are quoted (not :no_check) so the release recipe's anchored sed
   # substitutions match. (No literal version/sha example in this comment — an
   # unanchored sed would otherwise rewrite it.)
-  version "0.1.1"
-  sha256 "fd85756b5cf8c30a05580b9eba56a1b2a0403aa025ad34cb9a2d35ff6414dc12"
+  version "0.1.2"
+  sha256 "b0255c7a790c71ccf20b52db86ec2d9c5a15d6bd90ce46a99ea0b5138cd0b249"
 
   url "https://github.com/slantedt/markdowndeck-dist/releases/download/v#{version}/MarkdownDeck.zip"
   name "MarkdownDeck"
