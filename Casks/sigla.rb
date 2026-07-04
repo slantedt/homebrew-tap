@@ -4,45 +4,41 @@ cask "sigla" do
 
   url "https://github.com/slantedt/sigla/releases/download/v#{version}/Sigla.zip"
   name "Sigla"
-  desc "Markdown reader for macOS"
+  desc "Markdown reader"
   homepage "https://github.com/slantedt/sigla"
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "Sigla.app"
+  # The mdv CLI is embedded in the app bundle: slantedt/markdownviewer's
+  # build-release cp's it into Contents/MacOS/mdv and deep-signs it, so the
+  # app's notarization ticket covers it. Expose it on $PATH via `binary`
+  # (no postflight curl). `sigla` and `mdview` are aliases of the same binary —
+  # mdv dispatches on argv[0] and treats `mdview` as the deprecated name.
+  #
+  # Requires a release built WITH the embedded CLI (v1.0.1+). Do not ship this
+  # with a release whose Sigla.app lacks Contents/MacOS/mdv.
+  binary "#{appdir}/Sigla.app/Contents/MacOS/mdv"
+  binary "#{appdir}/Sigla.app/Contents/MacOS/mdv", target: "sigla"
+  binary "#{appdir}/Sigla.app/Contents/MacOS/mdv", target: "mdview"
 
-  postflight do
-    mdv_url = "https://github.com/slantedt/sigla/releases/download/v#{version}/mdv"
-    mdv_path = "#{HOMEBREW_PREFIX}/bin/mdv"
-    sigla_link = "#{HOMEBREW_PREFIX}/bin/sigla"
-    mdview_link = "#{HOMEBREW_PREFIX}/bin/mdview"
-
-    system_command "curl", args: ["-fsSL", "-o", mdv_path, mdv_url]
-    system_command "chmod", args: ["+x", mdv_path]
-
-    # Soft cut per cli.feature: one binary (mdv), two cask-installed symlinks.
-    # The mdv binary detects argv[0] and prints a deprecation notice when
-    # invoked as `mdview`.
-    [sigla_link, mdview_link].each do |link|
-      File.delete(link) if File.symlink?(link) || File.exist?(link)
-    end
-    File.symlink(mdv_path, sigla_link)
-    File.symlink(mdv_path, mdview_link)
-
-    # Re-register Sigla.app with LaunchServices so Spotlight, `open -a`, and
-    # the Finder pick up this bundle rather than a stale prior install.
-    system_command "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister",
-                   args: ["-f", "/Applications/Sigla.app"]
-  end
-
-  uninstall_postflight do
+  preflight do
+    # Transitional cleanup. Sigla <= 1.0.0 shipped mdv (and the sigla/mdview
+    # aliases) as real files curl'd by the old cask's postflight. The binary
+    # stanzas above link those names from the app bundle, but Homebrew won't
+    # clobber a pre-existing non-managed file — it would skip linking and leave
+    # the stale 1.0.0 mdv on PATH (which then loads the updated frameworks and
+    # can break). Remove any leftover that isn't already our bundle symlink so
+    # the links take effect. Safe to remove once users are off Sigla <= 1.0.0.
     %w[mdv sigla mdview].each do |name|
-      p = "#{HOMEBREW_PREFIX}/bin/#{name}"
-      File.delete(p) if File.symlink?(p) || File.exist?(p)
+      link = Pathname.new("#{HOMEBREW_PREFIX}/bin/#{name}")
+      present = link.exist? || link.symlink?
+      next unless present
+      next if link.symlink? && link.readlink.to_s.include?("Sigla.app/Contents/MacOS/mdv")
+
+      link.delete
     end
   end
 
-  zap trash: [
-    "~/Library/Preferences/com.slantedt.sigla.plist",
-  ]
+  zap trash: "~/Library/Preferences/com.slantedt.sigla.plist"
 end
