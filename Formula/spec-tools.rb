@@ -13,24 +13,24 @@
 class SpecTools < Formula
   desc "Graph over a Gherkin spec corpus: validate, find, coverage, claims"
   homepage "https://github.com/slantedt/spec-dag"
-  version "0.3.0"
+  version "0.4.0"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://downloads.slantedt.com/spec-tools/0.3.0/spec-tools-0.3.0-macos-arm64.tar.gz"
-      sha256 "6e08cb9d6b023150fd6ae6c268c243474f241e8a02149261c7436c69ff97e58a"
+      url "https://downloads.slantedt.com/spec-tools/0.4.0/spec-tools-0.4.0-macos-arm64.tar.gz"
+      sha256 "ea39a7c098f6772d2b553d36c0ef74e2f8bd1836fdaf9158c707d0c32c5950cb"
     end
     on_intel do
-      url "https://downloads.slantedt.com/spec-tools/0.3.0/spec-tools-0.3.0-macos-x86_64.tar.gz"
-      sha256 "3f4fcb9ebef6f6384a056e5c30317ad9c14c60e14e54e7b2b7e6da0e68ca3f75"
+      url "https://downloads.slantedt.com/spec-tools/0.4.0/spec-tools-0.4.0-macos-x86_64.tar.gz"
+      sha256 "682ab222f83d7419c7b6ec4ffed810c345cccbcdc52cac6c9dba709d29d96b8d"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://downloads.slantedt.com/spec-tools/0.3.0/spec-tools-0.3.0-linux-x86_64.tar.gz"
-      sha256 "e9545ed5235eb6446f4db0b946b6fb4dd6552571466f6271a342322d0ec9c8a5"
+      url "https://downloads.slantedt.com/spec-tools/0.4.0/spec-tools-0.4.0-linux-x86_64.tar.gz"
+      sha256 "23fe8afbf922c03b8fc0c103818241a82a5956b9745d49b13d0cd1929620d3b7"
     end
   end
 
